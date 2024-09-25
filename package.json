@@ -2,6 +2,18 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2"
-  }
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "xpress": "^2.4.6"
+  },
+  "name": "sistema-de-asistencia-qr",
+  "version": "1.0.0",
+  "description": "Sistema de asistencia QR\r node js 20.17.0\r instascan 10.8.2\r bcryptjs 2.4.3\r express 4.21.0\r jsonwebtoken 9.0.2",
+  "main": "Java.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
