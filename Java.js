@@ -1,7 +1,25 @@
 // Importar dependencias
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { Pool } = require('pg');
+
 const app = express();
 app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname,'images')));
+
+const SECRET_KEY = 'mi_clave_secreta';
+
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'Sistema_QR',
+    password: '1508',
+    port: 5432
+});
 
 // Base de datos simulada para almacenar la asistencia
 let asistencias = [];
@@ -37,6 +55,47 @@ function buscarEstudiantePorQR(qr_code) {
     ];
     return estudiantes.find(est => est.qr_code === qr_code);
 }
+
+app.get('/login', (request, response) => {
+    fs.readFile('./LOGIN.html', 'utf8', (err, html) => {
+        if (err) {
+            response.status(500).send('INTERNAL SERVER ERROR');
+        }
+        response.send(html);
+    })
+} );
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const result = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
+        const user = results.rows[0];
+
+            // Buscar el usuario en la base de datos
+        //const user = users.find(u => u.email === email);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        // Comparar la contraseña con bcrypt
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Contraseña incorrecta' });
+        }
+
+        // Generar el token JWT
+        const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+            expiresIn: '1h', // El token expira en 1 hora
+        });
+
+        // Devolver el token al cliente
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({message: 'INTERNAL SERVER ERROR'});
+    }
+});
 
 // Iniciar el servidor
 app.listen(3000, () => {
