@@ -29,8 +29,8 @@
                     <h2 class="text-center">Iniciar Sesión</h2>
                     <form id="loginForm">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" placeholder="Ingresa tu usuario">
+                            <label for="email" class="form-label">Correo</label>
+                            <input type="text" class="form-control" id="email" placeholder="Ingresa tu correo">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
@@ -54,7 +54,7 @@
         document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             try {
@@ -63,7 +63,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({username, password}),
+                    body: JSON.stringify({email, password}),
                 });
 
                 const data = await response.json();
@@ -71,6 +71,7 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     document.getElementById('message').textContent = 'Inicio de sesión exitoso!';
+                    window.location.href="VistaDocente.html";
 
                     //redirigir
                 } else {

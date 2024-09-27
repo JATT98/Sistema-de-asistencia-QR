@@ -57,7 +57,7 @@ function buscarEstudiantePorQR(qr_code) {
 }
 
 app.get('/login', (request, response) => {
-    fs.readFile('./LOGIN.html', 'utf8', (err, html) => {
+    fs.readFile('./login.html', 'utf8', (err, html) => {
         if (err) {
             response.status(500).send('INTERNAL SERVER ERROR');
         }
@@ -65,11 +65,20 @@ app.get('/login', (request, response) => {
     })
 } );
 
+
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+      console.error('Error ejecutando la consulta', err.stack);
+    } else {
+      console.log('Resultado de la consulta:', res.rows);
+    }
+});
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const result = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
+        const results = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
         const user = results.rows[0];
 
             // Buscar el usuario en la base de datos
@@ -79,8 +88,11 @@ app.post('/login', async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
+        console.log(password, user.contrasena)
+
         // Comparar la contraseña con bcrypt
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        //const isPasswordValid = await bcrypt.compare(password, user.contrasena);  // Como no esta encriptada, aca siempre te va a tirar error
+        const isPasswordValid = (password == user.contrasena);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
@@ -93,6 +105,7 @@ app.post('/login', async (req, res) => {
         // Devolver el token al cliente
         res.json({ token });
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: 'INTERNAL SERVER ERROR'});
     }
 });
