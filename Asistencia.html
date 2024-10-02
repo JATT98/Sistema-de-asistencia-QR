@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Asistencia - Escanear QR</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #1E88E5;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #FFEB3B;
+        }
+    </style>
 </head>
 <body>
+
     <style>
         h1{text-align: center;}
         p{text-align: center;}
@@ -23,6 +36,36 @@
             text-align: center;
         }
     </style>
+    <!-- Menú de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema de Asistencia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="VistaDocente.html">Asistencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="VistaReportes.html">Reportes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="VistaEstudiante.html">Creacion QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <h1>Escanea tu código QR para registrar asistencia</h1>
 
     <!-- El video muestra la cámara en vivo -->
@@ -72,5 +115,6 @@
     <div class="d-grid gap-2 col-6 mx-auto">
         <button class="btn btn-primary" type="button" onclick="window.location.href='VistaDocente.html'">Regresar</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
