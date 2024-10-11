@@ -4,6 +4,7 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.0",
+    "qrcode": "^1.5.4",
     "xpress": "^2.4.6"
   },
   "name": "sistema-de-asistencia-qr",
